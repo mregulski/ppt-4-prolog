@@ -8,7 +8,8 @@ max_sum([], 0) :- !. % if list is empty don't go further
 max_sum(List, Sum) :-
     max_sum_(List,0, 0, Sum).
 
-% will be called with Y as 'sum so far'
+% if max_sum/2 is called, this will be called with Y as 'Sum so far'
+% which is the expected outcome.
 max_sum_([], _, Y, Y).
 
 % Find maximum section sum of a list [H|T].
