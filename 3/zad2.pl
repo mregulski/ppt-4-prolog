@@ -1,3 +1,4 @@
+:- use_module(library(clpfd)).
 sum([],0).
 sum([Head|Tail], Sum) :-
     sum(Tail, X),
@@ -5,8 +6,9 @@ sum([Head|Tail], Sum) :-
 
 % convienence wrapper
 max_sum([], 0) :- !. % if list is empty don't go further
-max_sum(List, Sum) :-
-    max_sum_(List,0, 0, Sum).
+max_sum([Head|T], Sum) :-
+    max_sum_(T,Head, Head, Sum). % initializing MaxEndHere and MaxSoFar
+                                        % to Head allows for all-negative lists
 
 % if max_sum/2 is called, this will be called with Y as 'Sum so far'
 % which is the expected outcome.
