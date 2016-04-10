@@ -1,5 +1,5 @@
 % utilities
-% fills empty spots in S with elements from [A|As]
+% put elements from A into S
 select([A|As], S) :- select(A, S, S1), select(As, S1).
 select([], _).
 % relative locations
