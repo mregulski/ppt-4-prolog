@@ -11,5 +11,4 @@ execute(File) :-
     scanner(Stream, Tokens),
     close(Stream),
     parse(Tokens, Program), !,
-    write(Program), nl,
     interpreter(Program).

@@ -11,8 +11,8 @@ instruction(assign(X, Expression))  -->
     [id(X)], [sep(:=)], expression(Expression), [sep(;)].
 instruction(read(X)) -->
     [key(read)], [id(X)], [sep(;)].
-instruction(write(ExpressionQ)) -->
-    [key(write)], , expression(Expression), [sep(;)].
+instruction(write(Expression)) -->
+    [key(write)], expression(Expression), [sep(;)].
 instruction(if(Condition, Then)) -->
     [key(if)], condition(Condition), [key(then)], program(Then), [key(fi)], [sep(;)].
 instruction(if(Condition, Then, Else)) -->
@@ -38,7 +38,7 @@ part(Factor mod Part) -->
 part(Factor) --> factor(Factor).
 
 
-factor(X) -->
+factor(id(X)) -->
     [id(X)].
 factor(int(X)) -->
     [int(X)].
