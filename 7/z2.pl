@@ -1,55 +1,55 @@
-/*merge_(Xs,Ys, [X|T]) :-
+/*my_merge_(Xs,Ys, [X|T]) :-
     freeze(Xs, (
 		freeze(Ys, (
 			Xs = [X|Xss],
 			Ys = [Y|_],
 			X =< Y,
-			merge_(Xss, Ys, T)
+			my_merge_(Xss, Ys, T)
 			)
 		)
     )).
 
-merge_(Xs, Ys, [Y|T]) :-
+my_merge_(Xs, Ys, [Y|T]) :-
     freeze(Ys, (
 		freeze(Xs, (
 			Xs = [X|_],
 			Ys = [Y|Yss],
 			X >= Y,
-			merge_(Xs, Yss, T)     
+			my_merge_(Xs, Yss, T)     
 			)
 		)
     )).
 
-merge_([], Ys, Out) :-
+my_merge_([], Ys, Out) :-
 	freeze(Ys, Ys = Out).
 	
-merge_(Xs, [], Out) :-
+my_merge_(Xs, [], Out) :-
 	freeze(Xs, Xs = Out).
 */
 
-merge_([X|Xs],[Y|Ys], [X|T]) :-
+my_merge([X|Xs], [Y|Ys], [X|T]) :-
     freeze(X, (
 		freeze(Y, (
 			X =< Y,
-			merge_(Xs, [Y|Ys], T)
+			my_merge(Xs, [Y|Ys], T)
 			)
 		)
     )).
 
-merge_([X|Xs], [Y|Ys], [Y|T]) :-
+my_merge([X|Xs], [Y|Ys], [Y|T]) :-
     freeze(Y, (
 		freeze(X, (
 			X >= Y,
-			merge_([X|Xs], Ys, T)     
+			my_merge([X|Xs], Ys, T)     
 			)
 		)
     )).
 
-merge_([], Ys, Out) :-
-	freeze(Ys, Ys = Out).
+my_merge([], [Y|Ys], Out) :-
+	freeze(Y, [Y|Ys] = Out).
 	
-merge_(Xs, [], Out) :-
-	freeze(Xs, Xs = Out).
+my_merge([X|Xs], [], Out) :-
+	freeze(X, [X|Xs] = Out).
 
 split([X,Y|In], [A|Out1], [B|Out2]) :-
 	freeze(X, (
@@ -61,20 +61,19 @@ split([X,Y|In], [A|Out1], [B|Out2]) :-
 			)
 		)
 	).
-split([X],[X],[]).
+split([X],[X],[]) :- freeze(X,true).
 split([],[],[]).	
 
-
-
-merge_sort([X],[X]) :- freeze(X,true).
-merge_sort([H|T], Out) :-
-	freeze(H, (
+my_merge_sort([X],[X]) :- write(ms),nl,freeze(X,true).
+my_merge_sort(In, Out) :-
+	freeze(In, (
 		split([H|T], A, B),
 		%format("A: ~w~nB: ~w~n",[A,B]),
-		merge_sort(A, Aout),
+		my_merge_sort(A, Aout),
 		%format("Aout: ~w~n",[Aout]),
-		merge_sort(B, Bout),
+		my_merge_sort(B, Bout),
 		%format("Bout: ~w~n~n",[Bout]),
-		merge_(Aout,Bout, Out),!
+		my_merge(Aout,Bout, Out),!
 		)
 	).
+	
